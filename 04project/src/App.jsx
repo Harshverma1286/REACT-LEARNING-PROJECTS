@@ -2,18 +2,18 @@ import { useState } from 'react'
 
 import './App.css'
 
-import Input from './Components/Input'
+import InputBox from './Components/Input'
 
 import UseCurrencyInfo from './Hooks/UseCurrencyInfo'
 
 function App() {
-  const {amount,setamount} = useState(0);
+  const [amount, setamount] = useState(0);
 
-  const {from,setfrom} = useState("usd");
+  const [from, setfrom] = useState("usd");
 
-  const {to,setto} = useState("inr");
+  const [to, setto] = useState("inr");
 
-  const {convertedamount,setconvertedamount} = useState(0);
+  const [convertedamount, setconvertedamount] = useState(0);
 
   const currencyinfo = UseCurrencyInfo(from);
 
@@ -43,20 +43,24 @@ function App() {
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                           
+                            finalamount();
                         }}
                     >
                         <div className="w-full mb-1">
                             <InputBox
                                 label="From"
-                                
+                                amount={amount}
+                                onamountchange={(amount)=>setamount(amount)}
+                                oncurrencychange = {(currency)=>setfrom(currency)}
+                                currencyoptions = {options}
+                                amountdisable                               
                             />
                         </div>
                         <div className="relative w-full h-0.5">
                             <button
                                 type="button"
                                 className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-md bg-blue-600 text-white px-2 py-0.5"
-                                
+                                onClick={swap}
                             >
                                 swap
                             </button>
@@ -64,11 +68,15 @@ function App() {
                         <div className="w-full mt-1 mb-4">
                             <InputBox
                                 label="To"
-                                
+                                amount={convertedamount}
+                                currencyoptions={options}
+                                oncurrencychange={(currency)=> setto(currency) }
+                                selectcurrency={to}
+                                amountdisable
                             />
                         </div>
                         <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
-                            Convert 
+                            Convert {from} to {to}
                         </button>
                     </form>
                 </div>
