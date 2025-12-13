@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 function GitHub(){
-    const[thedata,setthedata] = useState({});
-    useEffect(()=>{
-        fetch('https://api.github.com/users/Harshverma1286')
-        .then((data)=> data.json())
-        .then((data)=> setthedata(data))
-    },[]);
+     const thedata = useLoaderData();
     return (
         <>
         <div  className='flex flex-wrap justify-center'>
@@ -18,3 +14,8 @@ function GitHub(){
 }
 
 export default GitHub;
+
+export const loaderGithubapi = async()=>{
+    const response = await fetch('https://api.github.com/users/Harshverma1286');
+    return response.json();
+}
