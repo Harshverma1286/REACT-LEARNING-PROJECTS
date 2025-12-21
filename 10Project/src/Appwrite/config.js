@@ -66,7 +66,67 @@ export class Service{
         }
     }
 
-    
+    async getpost(slug){
+        try {
+            return await this.databases.getDocument(
+                conf.appwritedatabaseid,
+                conf.appwritecollectionid,
+                slug
+            )
+        } catch (error) {
+            console.log("appwrite error :",error);
+            return false;
+        }
+    }
+
+    async getallposts(){
+        try {
+            return await this.databases.listDocuments(
+                conf.appwritedatabaseid,
+                conf.appwritecollectionid,
+                [
+                    Query.equal("status","active")
+                ]
+            )
+        } catch (error) {
+            console.log("appwrite error :",error);
+            return false;
+        }
+    }
+
+    async uploadfile(file){
+        try {
+            return await this.bucket.createFile(
+                conf.appwritebucketid,
+                ID.unique(),
+                file,
+            )
+        } catch (error) {
+            console.log("appwrite error :",error);
+            return false;
+        }
+    }
+
+    async deletefile(fileid){
+        try {
+            await this.bucket.deleteFile(
+                conf.appwritebucketid,
+                fileid
+            )
+            return true;
+        } catch (error) {
+            console.log("appwrite error :",error);
+        }
+    }
+
+    getfilepreview(fileid){
+        return this.bucket.getFilePreview(
+            conf.appwritebucketid,
+            fileid
+        )
+    }
+
+
 };
 
 const service = new Service();
