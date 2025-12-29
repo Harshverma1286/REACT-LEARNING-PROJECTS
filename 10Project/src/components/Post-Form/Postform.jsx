@@ -73,7 +73,64 @@ function Postform({post}){
         }
     },[watch,slugtransform,setvalue]);
     return (
-        <div></div>
+        <form onSubmit={handlesubmit(submit)} className="flex flex-wrap">
+            <div className="w-2/3 px-2">
+            <Input
+            label="Title :"
+            placeholder="Title"
+            className="mb-4"
+            {...register("title",{
+                required:true
+            })}
+            />
+            <Input
+            label="Slug :"
+            placeholder="Slug"
+            className="mb-4"
+            {...register("slug",{
+                required:true
+            })}
+            onInput={(e)=>{
+                setvalue("slug",slugtransform(e.currentTarget.value),{shouldValidate:true})
+            }}
+            />
+            <Rte
+            label="Content :"
+            name="content"
+            control={control}
+            defaultvalue={getvalues("content")}
+            />
+            </div>
+            <div className="w-1/3 px-2">
+                <Input
+                label="Featured Image :"
+                type="file"
+                className="mb-4"
+                accept="image/png, image/jpeg, image/jpg, image/gif"
+                {...register("image",{required:!post})}
+                />
+                {post && (
+                    <div className="w-full mb-4">
+                        <img src={appwriteservice.getfilepreview(post.featuredimage)} alt={post.title} className="rounded-lg" />
+                    </div>
+                )}
+                <Select
+                options={["active","inactive"]}
+                label="Status"
+                className="mb-4"
+                {...register("status",{
+                    required:"true"
+                })}
+                />
+                <Button
+                type="submit"
+                bgColor={post ? "bg-green-500" : undefined}
+                className="w-full"
+                >
+                    {post ? "update" :"submit"}
+                </Button>
+            </div>
+        </form>
     )
 }
 
