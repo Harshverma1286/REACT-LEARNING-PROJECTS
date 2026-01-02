@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import {useDispatch} from 'react-redux'
 import './App.css'
 import authservice from './Appwrite/auth';
-import { login, logout } from './Store/AuthSlice';
+import { login, logout as logoutuser } from './Store/AuthSlice';
 import { Footer, Header } from './components/indexexpo';
 import { Outlet } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ function App() {
 
   console.log(import.meta.env.VITE_APPWRITE_URL);
 
-  const [loading,setloading] = useState(false);
+  const [loading,setloading] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ function App() {
         dispatch(login({user}))
       }
       else{
-        dispatch(logout());
+        dispatch(logoutuser());
       }
     }).finally(()=> setloading(false))
   },[])
@@ -31,7 +31,7 @@ function App() {
       <div className='w-full block '>
         <Header/>
         <main>
-          Todo:{/* <Outlet/> */}
+          Todo:<Outlet/>
         </main>
         <Footer/>
       </div>

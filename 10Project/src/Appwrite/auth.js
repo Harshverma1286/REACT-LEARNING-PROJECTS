@@ -14,7 +14,12 @@ export class Authservice{
 
     async createaccount({email,password,name}){
         try{
-            const useraccount = await this.account.create({userID:ID.unique(),email,password,name});
+            const useraccount = await this.account.create(
+                ID.unique()
+                ,email
+                ,password
+                ,name
+            );
             if(useraccount){
                 return this.login({email,password});
             }
@@ -28,7 +33,10 @@ export class Authservice{
 
     async login({email,password}){
         try {
-            return await this.account.createEmailPasswordSession({email,password})
+            return await this.account.createEmailPasswordSession(
+                email
+                ,password
+            )
         } catch (error) {
             throw error;
         }
@@ -38,17 +46,15 @@ export class Authservice{
         try{
             return await this.account.get();
         }catch(error){
-            throw error;
+            return null;
         }
-
-        return null;
     }
 
     async logout(){
         try{
             await this.account.deleteSessions();
         }catch(error){
-            throw error;
+            console.log("user already logged out");
         }
     }
 };

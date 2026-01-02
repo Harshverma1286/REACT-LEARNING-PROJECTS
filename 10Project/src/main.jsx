@@ -5,11 +5,14 @@ import App from './App.jsx'
 import store from './Store/store.js'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Authlayout, Signup } from './components/indexexpo.js'
-import Login from './Pages/Login.jsx'
+import { Authlayout, Login } from './components/indexexpo.js'
+import Signup from './Pages/SignUp.jsx'
 import Home from './Pages/Home.jsx'
-import Signup from './components/indexexpo.js'
 import Post from './Pages/Post.jsx'
+import EditPost from './Pages/EditPost.jsx';
+import AllPosts from './Pages/Allpost.jsx';
+import AddPosts from './pages/Addpost.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -41,19 +44,26 @@ const router = createBrowserRouter([
         element:(
           <Authlayout authentication>
             {" "}
+            <AllPosts/>
           </Authlayout>
         )
       },
       {
         path:'/add-post',
         element:(
-          <Authlayout authentication>{" "}</Authlayout>
+          <Authlayout authentication>
+            {" "}
+            <AddPosts/>
+          </Authlayout>
         )
       },
       {
         path:'/edit-post/:slug',
         element:(
-          <Authlayout authentication>{" "}</Authlayout>
+          <Authlayout authentication>
+            {" "}
+            <EditPost/>
+          </Authlayout>
         )
       },
       {

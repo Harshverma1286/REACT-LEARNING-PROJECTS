@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function Postform({post}){
-    const {register,handlesubmit,control,watch,setvalue,getvalues} = useForm({
+    const {register,handleSubmit,control,watch,setValue,getValues} = useForm({
         defaultValues:{
             title:post?.title || '',
             slug:post?.slug || '',
@@ -18,7 +18,7 @@ function Postform({post}){
 
     const navigate = useNavigate();
 
-    const userData = useSelector(state=>state.user.userData);
+    const userData = useSelector(state=>state.auth.userData);
 
     const submit = async ()=>{
         if(post){
@@ -64,16 +64,16 @@ function Postform({post}){
     React.useEffect(()=>{
         const subscription = watch((value,{name})=>{
             if(name==='title'){
-                setvalue('slug',slugtransform(value.title,{shouldValidate:true}))
+                setValue('slug',slugtransform(value.title,{shouldValidate:true}))
             }
         });
 
         return ()=>{
             subscription.unsubscribe();
         }
-    },[watch,slugtransform,setvalue]);
+    },[watch,slugtransform,setValue]);
     return (
-        <form onSubmit={handlesubmit(submit)} className="flex flex-wrap">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
             <Input
             label="Title :"
@@ -91,14 +91,14 @@ function Postform({post}){
                 required:true
             })}
             onInput={(e)=>{
-                setvalue("slug",slugtransform(e.currentTarget.value),{shouldValidate:true})
+                setValue("slug",slugtransform(e.currentTarget.value),{shouldValidate:true})
             }}
             />
             <Rte
             label="Content :"
             name="content"
             control={control}
-            defaultvalue={getvalues("content")}
+            defaultvalue={getValues("content")}
             />
             </div>
             <div className="w-1/3 px-2">

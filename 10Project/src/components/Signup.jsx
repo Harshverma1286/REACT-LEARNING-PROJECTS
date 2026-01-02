@@ -14,7 +14,7 @@ function Signup(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [error,seterror] = useState("");
-    const {register,hanldesubmit} = useForm();
+    const {register,handleSubmit} = useForm();
 
     const create = async(data)=>{
         seterror("");
@@ -56,7 +56,7 @@ function Signup(){
                 </p>   
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-                <form onSubmit={hanldesubmit(create)}>
+                <form onSubmit={handleSubmit(create)}>
                     <div className="space-y-5">
                         <Input
                         label="Full Name: "
@@ -74,15 +74,16 @@ function Signup(){
                                  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ || 
                             "Email address must be a valid address"
                         }
-                        })}
+                        }
+                        )}
                         />
                         <Input
                         label="password: "
                         type="password"
                         placeholder="Enter your password"
-                        {...register("pasword"),{
+                        {...register("password",{
                             required:true
-                        }}
+                        })}
                         />
                         <Button type="submit" className="w-full">create Account</Button>
                     </div>
