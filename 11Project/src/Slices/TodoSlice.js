@@ -30,7 +30,7 @@ const authSlice = createSlice({
             const value = state.todos.find((todo)=>todo.id==id);
 
             if(value){
-                todo.text = text;
+                value.text = text;
             }
         }
     }
